@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Factory Certificate of Conformance - Mudd Packaging</title>
+  <style>
+    * { box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+    body { background: #f0f0f0; margin: 0; padding: 20px; }
+
+    .page {
+      width: 11.69in;
+      min-height: 8.27in;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 24px 30px;
+      border: 1px solid #ccc;
+    }
+
+    /* HEADER TITLE */
+    .header-title {
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .header-title h1 {
+      font-size: 22px;
+      letter-spacing: 1px;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    /* HEADER GRID: LEFT = FACTORY & PURCHASER, RIGHT = DOC/SHIPMENT */
+    .header-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 40px;
+      margin-bottom: 18px;
+    }
+
+    .header-left {
+      flex: 1.1;
+      font-size: 12px;
+    }
+
+    .header-right {
+      flex: 0.9;
+      font-size: 12px;
+    }
+
+    .mini-section-title {
+      font-weight: bold;
+      font-size: 13px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 4px 6px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .field-label {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    textarea {
+      width: 100%;
+      padding: 4px 5px;
+      font-size: 12px;
+      border: 1px solid #bbb;
+      border-radius: 2px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 40px;
+    }
+
+    /* Purchaser details block */
+    .purchaser-block {
+      margin-top: 16px;
+    }
+
+    .purchaser-inner {
+      display: flex;
+      flex-direction: column;         /* LOGO ON TOP, TEXT UNDER */
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 6px;
+    }
+
+    .purchaser-logo img {
+      max-height: 80px;
+      padding: 4px;
+    }
+
+    .purchaser-text {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .purchaser-text strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    /* Right header: doc + shipment */
+    .doc-row {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .doc-row span {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .doc-row input {
+      width: 120px;
+    }
+
+    .shipment-row {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 2px 8px;
+      margin-bottom: 3px;
+      align-items: center;
+    }
+
+    .shipment-label {
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    /* Generic sections below header */
+    .section {
+      margin-bottom: 16px;
+      font-size: 12px;
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 14px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th, td {
+      border: 1px solid #999;
+      padding: 4px 5px;
+    }
+
+    th {
+      background: #f0f0f0;
+      font-weight: bold;
+    }
+
+    .small-input {
+      width: 100%;
+      border: none;
+      padding: 0;
+      font-size: 12px;
+    }
+
+    .button-bar {
+      margin: 12px auto 0;
+      width: 11.69in;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .button-bar button,
+    .inline-btn {
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 3px;
+      border: 1px solid #555;
+      background: #f5f5f5;
+      cursor: pointer;
+    margin-bottom: 5px;
+
+    }
+
+    .button-bar button:hover,
+    .inline-btn:hover {
+      background: #e0e0e0;
+    }
+
+    .row-actions {
+      text-align: center;
+      width: 40px;
+    }
+
+    .row-remove {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    .row-remove:hover {
+      color: #b00000;
+    }
+
+    .qc-list label {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .qc-list input[type="checkbox"] {
+      margin-right: 4px;
+    }
+
+    .stamp-box {
+      border: 1px dashed #777;
+      height: 80px;
+      margin-top: 4px;
+    }
+
+    .auth-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 20px;
+    }
+
+    .auth-grid .field-row {
+      grid-template-columns: 80px 1fr;
+    }
+
+    .cr-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 20px;
+    }
+
+    .cr-grid .field-row {
+      grid-template-columns: 140px 1fr;
+    }
+
+    @media print {
+      @page {
+        size: A4 landscape;
+        margin: 10mm;
+      }
+      body {
+        background: #fff;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        border: none;
+        padding: 0;
+      }
+      .button-bar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body onload="initForm()">
+
+  <div class="page">
+
+    <!-- CENTERED TITLE -->
+    <div class="header-title">
+      <h1>Factory Certificate of Conformance</h1>
+    </div>
+
+    <!-- HEADER GRID -->
+    <div class="header-grid">
+
+      <!-- LEFT: FACTORY & SUPPLIER + PURCHASER DETAILS -->
+      <div class="header-left">
+        <div class="mini-section-title">Factory &amp; Supplier Information</div>
+        <div>
+          <div class="field-row">
+            <span class="field-label">Factory Name:</span>
+            <input type="text" />
+          </div>
+          <div class="field-row">
+            <span class="field-label">Factory Address:</span>
+            <input type="text" />
+          </div>
+          <div class="field-row">
+            <span class="field-label">Contact Person:</span>
+            <input type="text" />
+          </div>
+          <div class="field-row">
+            <span class="field-label">Phone:</span>
+            <input type="text" />
+          </div>
+          <div class="field-row">
+            <span class="field-label">WeChat:</span>
+            <input type="text" />
+          </div>
+        </div>
+
+        <div class="purchaser-block">
+          <div class="mini-section-title">Purchaser Details</div>
+          <div class="purchaser-inner">
+            <div class="purchaser-logo">
+              <img src="https://muddpackaging.com/cdn/shop/files/Screenshot_17.png" alt="Mudd Packaging Logo" />
+            </div>
+            <div class="purchaser-text">
+              <strong>Mudd Packaging</strong>
+              140 Keyland Court, Unit 11<br />
+              Bohemia, New York, 11716<br />
+              Phone: 516-532-1933<br />
+              Email: Sales@muddpackaging.com
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: DOCUMENT / SHIPMENT FIELDS -->
+      <div class="header-right">
+        <div class="doc-row">
+          <span>Document No.:</span>
+          <input type="text" />
+          <span>Revision:</span>
+          <input type="text" />
+        </div>
+
+        <div class="shipment-row">
+          <div class="shipment-label">Ship Date:</div>
+          <div><input type="date" id="ship-date" /></div>
+        </div>
+        <div class="shipment-row">
+          <div class="shipment-label">Pack Slip No.:</div>
+          <div><input type="text" /></div>
+        </div>
+        <div class="shipment-row">
+          <div class="shipment-label">Customer PO:</div>
+          <div><input type="text" /></div>
+        </div>
+        <div class="shipment-row">
+          <div class="shipment-label">Sales Order:</div>
+          <div><input type="text" /></div>
+        </div>
+        <div class="shipment-row">
+          <div class="shipment-label">Qty Shipped:</div>
+          <div><input type="number" /></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT DESCRIPTION (ENGLISH) 
+    <div class="section">
+      <div class="section-title">Product Description (English)</div>
+      <input type="text" placeholder='e.g., "22×116 Glass Tube with CRC Cap – Black"' />
+      <div style="font-size:11px; margin-top:3px;">
+        Use clear English description; internal factory codes may also be listed.
+      </div>
+    </div>-->
+
+    <!-- ITEM DETAILS TABLE -->
+    <div class="section">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="section-title" style="border:none; margin:0;">Item Details</div>
+        <button type="button" class="inline-btn" onclick="addItemRow()">+ Add Item Row</button>
+      </div>
+
+      <table id="item-table">
+        <thead>
+          <tr>
+            <th style="width:26%;">Item Number / Description (ENGLISH)</th>
+            <th style="width:20%;">End Part No.</th>
+            <th style="width:16%;">Mfg Date</th>
+            <th style="width:14%;">Lot Number</th>
+            <th style="width:10%;">Qty</th>
+            <th style="width:10%;">Unit of Measure</th>
+            <th style="width:4%;">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- MATERIAL DETAILS TABLE -->
+    <div class="section">
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <div class="section-title" style="border:none; margin:0;">Material Details</div>
+        <button type="button" class="inline-btn" onclick="addMaterialRow()">+ Add Material Row</button>
+      </div>
+
+      <table id="material-table">
+        <thead>
+          <tr>
+            <th style="width:20%;">Material / Component</th>
+            <th>Specification / Regulatory Notes</th>
+            <th style="width:4%;">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- MATERIAL SOURCE (OPTIONAL) -->
+    <div class="section">
+      <div class="section-title">Material Source (Optional)</div>
+      <input type="text" placeholder="e.g., Sinopec, ExxonMobil, ChemChina, BASF, etc." />
+    </div>
+
+    <!-- PCR INFORMATION (IF APPLICABLE) -->
+    <div class="section">
+      <div class="section-title">PCR Information (If Applicable)</div>
+
+      <div class="qc-list">
+        <label><input type="checkbox" /> No (Virgin Resin Only)</label>
+        <label><input type="checkbox" /> Yes — PCR was used (fill in below)</label>
+      </div>
+
+      <div class="cr-grid" style="margin-top:8px;">
+        <div class="field-row">
+          <span class="field-label">PCR Percentage:</span>
+          <input type="text" placeholder="%" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">PCR Resin Supplier:</span>
+          <input type="text" placeholder="e.g., GRS certified supplier" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">GRS / OBP Cert Attached:</span>
+          <div>
+            <label style="margin-right:12px;"><input type="checkbox" /> Yes</label>
+            <label><input type="checkbox" /> No</label>
+          </div>
+        </div>
+        <div class="field-row" style="grid-column:1 / -1;">
+          <span class="field-label">Notes:</span>
+          <input type="text" />
+        </div>
+      </div>
+    </div>
+
+    <!-- CHILD-RESISTANT DOCUMENTS -->
+    <div class="section">
+      <div class="section-title">Child-Resistant Documents (If Applicable)</div>
+      <div class="cr-grid">
+        <div class="field-row">
+          <span class="field-label">CR Test Report #:</span>
+          <input type="text" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">Testing Lab:</span>
+          <input type="text" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">Date Tested:</span>
+          <input type="date" />
+        </div>
+      </div>
+      <div style="font-size:11px; margin-top:4px;">
+        (Attach test report file if available.)
+      </div>
+    </div>
+
+    <!-- QC CONFIRMATION -->
+    <div class="section">
+      <div class="section-title">QC Confirmation</div>
+      <div class="qc-list">
+        <label><input type="checkbox" /> Dimensions match approved sample</label>
+        <label><input type="checkbox" /> Material matches declared resin</label>
+        <label><input type="checkbox" /> Colorant / masterbatch matches spec</label>
+        <label><input type="checkbox" /> No substitutions made</label>
+        <label><input type="checkbox" /> Passed internal QC</label>
+      </div>
+    </div>
+
+    <!-- FACTORY AUTHORIZATION -->
+    <div class="section">
+      <div class="section-title">Factory Authorization</div>
+      <div class="auth-grid">
+        <div class="field-row">
+          <span class="field-label">Name:</span>
+          <input type="text" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">Title:</span>
+          <input type="text" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">Signature:</span>
+          <input type="text" />
+        </div>
+        <div class="field-row">
+          <span class="field-label">Date:</span>
+          <input type="date" />
+        </div>
+      </div>
+
+      <div style="margin-top:10px;">
+        <span class="field-label">Factory Stamp / Chop (if available):</span>
+        <div class="stamp-box"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BUTTON BAR -->
+  <div class="button-bar">
+    <button onclick="clearForm()">Clear Form</button>
+    <button onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+<script>
+function initForm() {
+  setToday();
+  resetTables();
+}
+
+function setToday() {
+  const today = new Date().toISOString().slice(0, 10);
+  const shipDate = document.getElementById("ship-date");
+  if (shipDate && !shipDate.value) shipDate.value = today;
+}
+
+function createItemRow() {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><input class="small-input" type="text" type="text" placeholder='e.g., "22×116 Glass Tube with CRC Cap – Black"'/></td>
+    <td><input class="small-input" type="text" /></td>
+    <td><input class="small-input" type="DATE" placeholder="YYYY-MM-DD" /></td>
+    <td><input class="small-input" type="text" /></td>
+    <td><input class="small-input" type="number" /></td>
+    <td><input class="small-input" type="text" placeholder="pcs, bags, cartons, etc." /></td>
+    <td class="row-actions">
+      <button class="row-remove" onclick="removeRow(this)">✖</button>
+    </td>`;
+  return tr;
+}
+
+function createMaterialRow() {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><input class="small-input" type="text" placeholder="PP resin, HS035 liner, PET jar body, etc." /></td>
+    <td><input class="small-input" type="text" /></td>
+    <td class="row-actions">
+      <button class="row-remove" onclick="removeRow(this)">✖</button>
+    </td>`;
+  return tr;
+}
+
+function addItemRow() {
+  document.querySelector("#item-table tbody").appendChild(createItemRow());
+}
+
+function addMaterialRow() {
+  document.querySelector("#material-table tbody").appendChild(createMaterialRow());
+}
+
+function removeRow(btn) {
+  const tr = btn.closest("tr");
+  const tbody = tr.parentNode;
+  if (tbody.querySelectorAll("tr").length <= 1) return; // keep at least one row
+  tr.remove();
+}
+
+function resetTables() {
+  const itemBody = document.querySelector("#item-table tbody");
+  const matBody  = document.querySelector("#material-table tbody");
+
+  itemBody.innerHTML = "";
+  matBody.innerHTML  = "";
+
+  itemBody.appendChild(createItemRow());
+  matBody.appendChild(createMaterialRow());
+}
+
+function clearForm() {
+  document.querySelectorAll("input[type=text], input[type=date], input[type=number]")
+    .forEach(i => i.value = "");
+
+  document.querySelectorAll("textarea").forEach(t => t.value = "");
+
+  document.querySelectorAll("input[type=checkbox]").forEach(cb => cb.checked = false);
+
+  resetTables();
+  setToday();
+}
+</script>
+
+</body>
+</html>
